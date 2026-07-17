@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin & Wash | Live Laundry Booking</title>
+    <!-- Tailwind CSS CDN (For instant, beautiful styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+
+    <!-- Navigation Header -->
+    <header class="bg-white border-b border-slate-100 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex justify-between items-center">
+            <span class="text-xl font-extrabold text-blue-600 flex items-center gap-2">🌀 Spin & Wash</span>
+            <nav class="flex space-x-6 text-sm font-semibold text-slate-600">
+                <a href="#booking-section" class="hover:text-blue-600">Book Pickup</a>
+                <a href="#tracking-section" class="hover:text-blue-600">Track Order</a>
+                <span id="nav-checkout" class="hidden text-emerald-600 font-bold">● Checkout Pending</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="max-w-6xl mx-auto px-4 py-12 text-center">
+        <h1 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Freshly Cleaned Clothes, <br><span class="text-blue-600">Zero Effort.</span>
+        </h1>
+        <p class="mt-4 text-slate-500 text-base max-w-xl mx-auto">
+            Book a prompt, reliable door-to-door laundry pickup in under 3 minutes. Track your wash status in real-time.
+        </p>
+    </section>
+
+    <!-- Tracker Section -->
+    <section id="tracking-section" class="max-w-xl mx-auto px-4 py-4">
+        <div class="bg-white border border-slate-100 rounded-3xl shadow-md p-6">
+            <h3 class="text-lg font-extrabold text-slate-900 mb-2">📦 Live Order Tracker</h3>
+            <p class="text-slate-500 text-xs mb-4">Enter your 6-digit Order ID to view your laundry's real-time progress.</p>
+            
+            <div class="flex space-x-2">
+                <input id="trackingInput" type="text" placeholder="e.g. SW-4821" class="flex-grow border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 uppercase tracking-widest font-bold">
+                <button onclick="trackOrder()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition">
+                    Track
+                </button>
+            </div>
+
+            <!-- Dynamic Timeline Box (Hidden by default) -->
+            <div id="tracker-display" class="hidden mt-6 pt-6 border-t border-slate-100">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h4 id="tracker-customer-name" class="font-bold text-slate-950 text-sm">-</h4>
+                        <p id="tracker-service-name" class="text-slate-500 text-xs">-</p>
+                    </div>
+                    <span class="bg-blue-50 text-blue-700 font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider" id="tracker-badge-status">
+                        Received
+                    </span>
+                </div>
+
+                <!-- Visual Progress Stepper -->
+                <div class="relative flex items-center justify-between mt-8 mb-4 px-4">
+                    <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-slate-100 z-0">
+                        <div id="tracker-progress-line" class="h-full bg-blue-500 transition-all duration-500" style="width: 0%;"></div>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div id="step-circle-1" class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xs font-bold transition">1</div>
+                        <span class="text-[10px] font-bold text-slate-500 mt-2">Received</span>
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div id="step-circle-2" class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xs font-bold transition">2</div>
+                        <span class="text-[10px] font-bold text-slate-500 mt-2">Washing</span>
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div id="step-circle-3" class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xs font-bold transition">3</div>
+                        <span class="text-[10px] font-bold text-slate-500 mt-2">Drying</span>
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div id="step-circle-4" class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xs font-bold transition">4</div>
+                        <span class="text-[10px] font-bold text-slate-500 mt-2">Delivered</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Booking Section (Responsive Split Column) -->
+    <section id="booking-section" class="max-w-4xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-5 gap-6">
+        
+        <!-- Form Panel -->
+        <form id="bookingForm" onsubmit="handleBookingSubmit(event)" class="md:col-span-3 bg-white border border-slate-100 rounded-3xl shadow-md p-6 space-y-4">
+            <h2 class="text-xl font-bold text-slate-900 mb-2">🧺 Book Your Pickup</h2>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Full Name</label>
+                    <input type="text" name="name" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="Jane Doe">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Phone Number</label>
+                    <input type="tel" name="phone" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="(555) 019-2834">
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Pickup Address</label>
+                <input type="text" name="address" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="Street Address, Apt, Suite">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Pickup Date</label>
+                    <input type="date" name="date" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Preferred Time Window</label>
+                    <select name="time" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-white">
+                        <option>Morning (8:00 AM - 12:00 PM)</option>
+                        <option>Afternoon (12:00 PM - 4:00 PM)</option>
+                        <option>Evening (4:00 PM - 8:00 PM)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Select Primary Service</label>
+                <select id="serviceSelect" name="service" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                </select>
+            </div>
+
+            <button id="submitBtn" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition mt-4">
+                Confirm Pickup & View Estimate
+            </button>
+        </form>
+
+        <!-- Dynamic Payment/Summary Panel (Hidden by default) -->
+        <div id="payment" class="hidden md:col-span-2 bg-emerald-50 border border-emerald-100 rounded-3xl p-6 h-fit space-y-4">
+            <h3 class="text-lg font-extrabold text-emerald-950">💳 Confirm Security Hold</h3>
+            <p class="text-emerald-800 text-xs leading-relaxed">To reserve your pickup slot, we place a temporary flat-rate pre-authorization deposit on your card. It's refunded directly into your final bill!</p>
+            
+            <hr class="border-emerald-200/50">
+            
+            <div class="space-y-2 text-sm text-emerald-900">
+                <div class="flex justify-between"><span class="font-medium">Client:</span> <span id="summaryName" class="font-bold">-</span></div>
+                <div class="flex justify-between"><span class="font-medium">Chosen Service:</span> <span id="summaryService" class="font-bold">-</span></div>
+                <div class="flex justify-between border-t border-emerald-200/50 pt-2 text-base font-extrabold">
+                    <span>Authorized Hold:</span> <span id="summaryTotal">GH20.00</span>
+                </div>
+            </div>
+
+            <form onsubmit="handlePaymentSubmit(event)" class="mt-4">
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition text-sm">
+                    🔒 Authorize GH20.00 Hold
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Connect our JavaScript File -->
+    <script src="app.js"></script>
+</body>
+</html>
