@@ -1,5 +1,5 @@
 // 🌀 1. Configuration & App State
-const GOOGLE_APP_URL = "YOUR_PASTED_GOOGLE_DEPLOYMENT_URL_HEREhttps://script.google.com/macros/s/AKfycbytBVxmCayli3kdMUyB1BWK1NiAI9LoawMTlXvvbbsvQ4uryuyq78VGSJar2f81Ok6w/exec"; // <-- Put your deployed API URL here!
+const GOOGLE_APP_URL = "https://script.google.com/macros/s/AKfycbytBVxmCayli3kdMUyB1BWK1NiAI9LoawMTlXvvbbsvQ4uryuyq78VGSJar2f81Ok6w/exec"; // <-- Put your deployed API URL here!
 
 const services = [
     { name: "Standard Wash & Fold (GH1.50/item)", rate: 1.5 },
