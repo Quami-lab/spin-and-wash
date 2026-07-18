@@ -2,9 +2,10 @@
 const GOOGLE_APP_URL = "YOUR_PASTED_GOOGLE_DEPLOYMENT_URL_HEREhttps://script.google.com/macros/s/AKfycbytBVxmCayli3kdMUyB1BWK1NiAI9LoawMTlXvvbbsvQ4uryuyq78VGSJar2f81Ok6w/exec"; // <-- Put your deployed API URL here!
 
 const services = [
-    { name: "Standard Wash & Fold ($1.50/lb)", rate: 1.5 },
-    { name: "Premium Wash, Dry & Iron ($2.50/lb)", rate: 2.5 },
-    { name: "Delicate/Dry Clean Service ($4.00/item)", rate: 4.0 }
+    { name: "Standard Wash & Fold (GH1.50/item)", rate: 1.5 },
+    { name: "Premium Wash, Dry & Iron (GH2.50/item)", rate: 2.5 },
+    { name: "Delicate/Dry Clean Service (GH4.00/item)", rate: 4.0 },
+    { name: "monthly subscription (GH200/discount)", rate: 200.0}
 ];
 
 const bookingDetails = {
